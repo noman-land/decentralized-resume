@@ -11,10 +11,8 @@ const toNumber = bigNumber => bigNumber.toNumber();
 
 export default class SquaresUtils {
   constructor() {
-    this.initWeb3();
-
     this.SquaresContract = contract(squaresArtifacts);
-    this.SquaresContract.setProvider(this.web3.currentProvider);
+    this.initWeb3().then(this.SquaresContract.setProvider);
   }
 
   getActiveAccount() {
@@ -108,10 +106,15 @@ export default class SquaresUtils {
   }
 
   initWeb3() {
-    if (typeof web3 !== 'undefined') {
-      logError('Using web3 detected from external source')();
-      this.web3 = new Web3(web3.currentProvider);
-    }
+    return new Promise((resolve, reject) => {
+      if (typeof web3 !== 'undefined') {
+        logError('Using web3 detected from external source')();
+        this.web3 = new Web3(web3.currentProvider);
+        return resolve(this.web3.currentProvider);
+      }
+
+      return reject(new Error('No web3 found. Please install MetaMask browser extension or use a web3 enabled browser.'));
+    });
   }
 
   rentSquare(x, y, r, g, b, value) {
