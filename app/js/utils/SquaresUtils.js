@@ -97,10 +97,6 @@ export default class SquaresUtils {
     return new Promise((resolve, reject) => {
       if (typeof web3 !== 'undefined') {
         this.web3 = new Web3(web3.currentProvider);
-        console.warn(
-          'Using web3 detected from external source:',
-          this.web3.currentProvider.constructor.name,
-        );
         return resolve(this.web3.currentProvider);
       }
 

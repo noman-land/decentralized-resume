@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import SquaresSection from '../components/Home/SquaresSection';
+import SquaresSection from '../components/Home/SquaresSection/SquaresSection';
 
 import { getGridSizeX } from '../actions/asyncActions/getGridSizeXAsyncActions';
 import { getGridSizeY } from '../actions/asyncActions/getGridSizeYAsyncActions';

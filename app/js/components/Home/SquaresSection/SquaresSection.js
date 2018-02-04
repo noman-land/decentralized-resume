@@ -3,6 +3,18 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Map } from 'immutable';
 
+import Square from './Square';
+
+const DEFAULT_SQUARE_INFO = Map({
+  r: 255,
+  g: 255,
+  b: 255,
+  currentOwner: '0x0000000000000000000000000000000000000000',
+  placedAtBlock: 0,
+  pricePaid: 0,
+  timesRented: 0,
+});
+
 export default class SquaresSection extends Component {
   static get propTypes() {
     return {
@@ -34,24 +46,21 @@ export default class SquaresSection extends Component {
     this.props.getGridSizeY();
   }
 
-  getSquareInfo(x, y) {
-    return () => {
-      this.props.getSquareInfo(x, y);
-    };
+  handlePickEmoji(pick) {
+    debugger
   }
 
   renderColumns(y) {
-    const { grid, gridSizeX } = this.props;
+    const { getSquareInfo, grid, gridSizeX } = this.props;
     return Array.from(new Array(gridSizeX)).map((_, x) => {
-      const { r, g, b } = grid.getIn([x, y], Map()).toJS();
-
+      const squareInfo = grid.getIn([x, y], DEFAULT_SQUARE_INFO);
       return (
-        <td
+        <Square
           key={`${x}-${y}`}
-          onClick={this.getSquareInfo(x, y)}
-          style={{
-            backgroundColor: `rgb(${r}, ${g}, ${b})`,
-          }}
+          getSquareInfo={getSquareInfo}
+          squareInfo={squareInfo}
+          x={x}
+          y={y}
         />
       );
     });
@@ -66,11 +75,13 @@ export default class SquaresSection extends Component {
 
   render() {
     return (
-      <table className="squares-table" cellPadding={0} cellSpacing={0}>
-        <tbody>
-          {this.renderRows()}
-        </tbody>
-      </table>
+      <div>
+        <table className="squares-table" cellPadding={0} cellSpacing={0}>
+          <tbody>
+            {this.renderRows()}
+          </tbody>
+        </table>
+      </div>
     );
   }
 }
