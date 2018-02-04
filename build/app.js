@@ -52107,12 +52107,12 @@ var SquaresUtils = function () {
       return new Promise(function (resolve, reject) {
         _this.web3.eth.getAccounts(function (error, accounts) {
           if (error) {
-            (0, _loggingUtils.logError)('Failed to get activeAccount')(error);
+            (0, _loggingUtils.logAndRethrow)('Failed to get activeAccount')(error);
             return reject(error);
           }
 
           if (!accounts.length) {
-            (0, _loggingUtils.logError)('Not logged in');
+            (0, _loggingUtils.logAndRethrow)('Not logged in');
             return reject(new Error('Not logged in'));
           }
 
@@ -52125,7 +52125,7 @@ var SquaresUtils = function () {
     value: function getBalance() {
       return this.SquaresContract.deployed().then(function (instance) {
         return instance.getBalance.call().then(toNumber).catch(function (error) {
-          (0, _loggingUtils.logError)('Failed to get balance')(error);
+          (0, _loggingUtils.logAndRethrow)('Failed to get balance')(error);
           throw error;
         });
       });
@@ -52154,7 +52154,7 @@ var SquaresUtils = function () {
             timesRented: toNumber(timesRented)
           };
         }).catch(function (error) {
-          (0, _loggingUtils.logError)('Failed to get square info')(error);
+          (0, _loggingUtils.logAndRethrow)('Failed to get square info')(error);
           //throw error;
         });
       });
@@ -52164,7 +52164,7 @@ var SquaresUtils = function () {
     value: function getOwner() {
       return this.SquaresContract.deployed().then(function (instance) {
         return instance.owner.call().catch(function (error) {
-          (0, _loggingUtils.logError)('Failed to get owner')(error);
+          (0, _loggingUtils.logAndRethrow)('Failed to get owner')(error);
           throw error;
         });
       });
@@ -52174,7 +52174,7 @@ var SquaresUtils = function () {
     value: function getTimeLimit() {
       return this.SquaresContract.deployed().then(function (instance) {
         return instance.timeLimit.call().then(toNumber).catch(function (error) {
-          (0, _loggingUtils.logError)('Failed to get time limit')(error);
+          (0, _loggingUtils.logAndRethrow)('Failed to get time limit')(error);
           throw error;
         });
       });
@@ -52184,7 +52184,7 @@ var SquaresUtils = function () {
     value: function getGridSizeX() {
       return this.SquaresContract.deployed().then(function (instance) {
         return instance.GRID_SIZE_X.call().then(toNumber).catch(function (error) {
-          (0, _loggingUtils.logError)('Failed to get grid size x')(error);
+          (0, _loggingUtils.logAndRethrow)('Failed to get grid size x')(error);
           throw error;
         });
       });
@@ -52194,7 +52194,7 @@ var SquaresUtils = function () {
     value: function getGridSizeY() {
       return this.SquaresContract.deployed().then(function (instance) {
         return instance.GRID_SIZE_Y.call().then(toNumber).catch(function (error) {
-          (0, _loggingUtils.logError)('Failed to get grid size y')(error);
+          (0, _loggingUtils.logAndRethrow)('Failed to get grid size y')(error);
           throw error;
         });
       });
@@ -52203,7 +52203,7 @@ var SquaresUtils = function () {
     key: 'initWeb3',
     value: function initWeb3() {
       if (typeof web3 !== 'undefined') {
-        (0, _loggingUtils.logError)('Using web3 detected from external source')();
+        (0, _loggingUtils.logAndRethrow)('Using web3 detected from external source')();
         this.web3 = new _web2.default(web3.currentProvider);
       }
     }
@@ -52221,7 +52221,7 @@ var SquaresUtils = function () {
           }).then(function (success) {
             console.log('Success:', success);
           }).catch(function (error) {
-            (0, _loggingUtils.logError)('Failed to rent square')(error);
+            (0, _loggingUtils.logAndRethrow)('Failed to rent square')(error);
             //throw error;
           });
         });
@@ -52240,7 +52240,7 @@ var SquaresUtils = function () {
           }).then(function (success) {
             console.log('Success:', success);
           }).catch(function (error) {
-            (0, _loggingUtils.logError)('Failed to set grid size y')(error);
+            (0, _loggingUtils.logAndRethrow)('Failed to set grid size y')(error);
             //throw error;
           });
         });
@@ -52259,7 +52259,7 @@ var SquaresUtils = function () {
           }).then(function (success) {
             console.log('Success:', success);
           }).catch(function (error) {
-            (0, _loggingUtils.logError)('Failed to set grid size y')(error);
+            (0, _loggingUtils.logAndRethrow)('Failed to set grid size y')(error);
             //throw error;
           });
         });
@@ -52276,7 +52276,7 @@ var SquaresUtils = function () {
             from: activeAccount,
             gas: _constants.DEFAULT_GAS
           }).catch(function (error) {
-            (0, _loggingUtils.logError)('Failed to set grid size y')(error);
+            (0, _loggingUtils.logAndRethrow)('Failed to set grid size y')(error);
             //throw error;
           });
         });
@@ -52293,7 +52293,7 @@ var SquaresUtils = function () {
             from: activeAccount,
             gas: _constants.DEFAULT_GAS
           }).catch(function (error) {
-            (0, _loggingUtils.logError)('Failed to set grid size y')(error);
+            (0, _loggingUtils.logAndRethrow)('Failed to set grid size y')(error);
             //throw error;
           });
         });
@@ -52312,7 +52312,7 @@ var SquaresUtils = function () {
           }).then(function (success) {
             console.log('Success:', success);
           }).catch(function (error) {
-            (0, _loggingUtils.logError)('Failed to withdraw')(error);
+            (0, _loggingUtils.logAndRethrow)('Failed to withdraw')(error);
             //throw error;
           });
         });
