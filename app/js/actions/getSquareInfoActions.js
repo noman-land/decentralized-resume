@@ -9,7 +9,6 @@ export const getSquareInfoError = createAction(
 
 export const getSquareInfoStart = createAction(
   ActionTypes.GET_SQUARE_INFO_START,
-  () => null,
   ({ x, y }) => ({ x, y }),
 );
 
