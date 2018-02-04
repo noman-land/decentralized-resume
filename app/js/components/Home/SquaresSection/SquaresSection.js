@@ -38,7 +38,16 @@ export default class SquaresSection extends Component {
       getGridSizeX: PropTypes.func.isRequired,
       getGridSizeY: PropTypes.func.isRequired,
       getSquareInfo: PropTypes.func.isRequired,
+      rentSquare: PropTypes.func.isRequired,
     };
+  }
+
+  constructor() {
+    super();
+    this.state = {
+      openedPanel: { x: null, y: null },
+    };
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -46,14 +55,30 @@ export default class SquaresSection extends Component {
     this.props.getGridSizeY();
   }
 
+  handleClick(x, y) {
+    return () => this.setState(state => {
+      const { x: openX, y: openY } = state.openedPanel;
+      return {
+        ...state,
+        openedPanel: x === openX && y === openY
+          ? { x: null, y: null }
+          : { x, y },
+      };
+    });
+  }
+
   renderColumns(y) {
-    const { getSquareInfo, grid, gridSizeX } = this.props;
+    const { getSquareInfo, grid, gridSizeX, rentSquare } = this.props;
+    const { openedPanel } = this.state;
     return Array.from(new Array(gridSizeX)).map((_, x) => {
       const squareInfo = grid.getIn([x, y], DEFAULT_SQUARE_INFO);
       return (
         <Square
           key={`${x}-${y}`}
+          isPanelOpen={openedPanel.x === x && openedPanel.y === y}
           getSquareInfo={getSquareInfo}
+          onClick={this.handleClick(x, y)}
+          onRentSquare={rentSquare}
           squareInfo={squareInfo}
           x={x}
           y={y}

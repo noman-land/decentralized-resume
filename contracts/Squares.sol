@@ -2,7 +2,7 @@ pragma solidity ^0.4.19;
 
 contract Squares {
   address public owner;
-  uint256 public timeLimit = 25;
+  uint256 public timeLimit = 2;
 
   uint256 public GRID_SIZE_X = 10;
   uint256 public GRID_SIZE_Y = 10;
@@ -23,7 +23,7 @@ contract Squares {
     uint8 b;
     address currentOwner;
     uint256 placedAtBlock;
-    uint256 pricePaid;
+    uint256 lastPricePaid;
     uint256 timesRented;
   }
 
@@ -42,7 +42,7 @@ contract Squares {
       uint8 b,
       address currentOwner,
       uint256 placedAtBlock,
-      uint256 pricePaid,
+      uint256 lastPricePaid,
       uint256 timesRented
   ) {
     Square memory square = grid[x][y];
@@ -53,7 +53,7 @@ contract Squares {
       isOwned ? square.b : DEFAULT_COLOR,
       square.currentOwner,
       square.placedAtBlock,
-      square.pricePaid,
+      square.lastPricePaid,
       square.timesRented
     );
   }
@@ -74,7 +74,7 @@ contract Squares {
     uint8 b
   ) public payable {
     require(x < GRID_SIZE_X && y < GRID_SIZE_Y);
-    require(msg.value > grid[x][y].pricePaid);
+    require(msg.value > grid[x][y].lastPricePaid);
     require(block.number - grid[x][y].placedAtBlock > timeLimit);
     grid[x][y] = Square(
       r,

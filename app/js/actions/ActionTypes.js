@@ -12,4 +12,8 @@ export default keyMirror({
   GET_SQUARE_INFO_ERROR: null,
   GET_SQUARE_INFO_START: null,
   GET_SQUARE_INFO_SUCCESS: null,
+
+  RENT_SQUARE_ERROR: null,
+  RENT_SQUARE_START: null,
+  RENT_SQUARE_SUCCESS: null,
 });

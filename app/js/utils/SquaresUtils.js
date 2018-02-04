@@ -38,10 +38,7 @@ export default class SquaresUtils {
       instance.getBalance
         .call()
         .then(toNumber)
-        .catch(error => {
-          logAndRethrow('Failed to get balance')(error);
-          throw error;
-        }));
+        .catch(logAndRethrow('Failed to get balance')));
   }
 
   getGridSizeX() {
@@ -104,7 +101,7 @@ export default class SquaresUtils {
     });
   }
 
-  rentSquare(x, y, r, g, b, value) {
+  rentSquare({ x, y, r, g, b, value }) {
     return this.SquaresContract.deployed().then(instance =>
       this.getActiveAccount().then(activeAccount =>
         instance
@@ -112,9 +109,6 @@ export default class SquaresUtils {
             value,
             from: activeAccount,
             gas: DEFAULT_GAS,
-          })
-          .then(success => {
-            console.log('Success:', success);
           })
           .catch(logAndRethrow('Failed to rent square'))));
   }
@@ -126,9 +120,6 @@ export default class SquaresUtils {
           .setGridSizeX(x, {
             from: activeAccount,
             gas: DEFAULT_GAS,
-          })
-          .then(success => {
-            console.log('Success:', success);
           })
           .catch(logAndRethrow('Failed to set grid size x'))));
   }

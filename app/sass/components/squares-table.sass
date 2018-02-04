@@ -1,7 +1,9 @@
 $square-size: 24px
-$info-box-offset: 3px
+$info-box-offset: -1px
 $info-box-width: 200px
 $info-box-arrow-width: 20px
+$info-box-border: 1px solid lightgrey
+$info-box-border-radius: 3px
 
 table.squares-table
   border-collapse: collapse
@@ -18,18 +20,19 @@ table.squares-table
 
         .info-box
           background-color: white
-          border: 1px solid lightgray
+          border: $info-box-border
+          border-radius: $info-box-border-radius
           bottom: $square-size + $info-box-offset + ($info-box-arrow-width / 2)
-          height: $info-box-width * (9/16)
           left: -($info-box-width / 2) + ($square-size / 2)
-          padding: 15px
+          padding: 16px
           position: absolute
           width: $info-box-width
 
           &:after
             background-color: white
-            border: 1px solid lightgray
+            border: $info-box-border
             border-left: 0
+            border-radius: $info-box-border-radius
             border-top: 0
             bottom: -($info-box-arrow-width / 2)
             content: ' '
