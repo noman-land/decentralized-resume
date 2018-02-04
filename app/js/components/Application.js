@@ -29,12 +29,10 @@ export default class Application extends Component {
 
     this.store = createStore(
       rootReducer,
-      composeEnhancers(
-        applyMiddleware(
-          thunk,
-          routerMiddleware(this.history),
-        ),
-      ),
+      composeEnhancers(applyMiddleware(
+        thunk,
+        routerMiddleware(this.history),
+      )),
     );
   }
 
@@ -42,7 +40,7 @@ export default class Application extends Component {
     return (
       <Provider store={this.store}>
         <ConnectedRouter history={this.history}>
-          <div className="flex-column p-4">
+          <div className="flex-column">
             <Nav />
             {renderRoutes(routeConfig)}
           </div>

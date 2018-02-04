@@ -6,7 +6,7 @@ import { path } from '../utils/routing/routingUtils';
 import { Routes } from '../constants';
 
 const Nav = () => (
-  <nav className="nav">
+  <nav className="nav-container">
     <ul className="flex list-style-none p-0 m-0-t">
       <li>
         <Link to={path()}>
