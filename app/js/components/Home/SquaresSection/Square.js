@@ -19,7 +19,7 @@ export default class Square extends Component {
         b: PropTypes.number.isRequired,
         currentOwner: PropTypes.string.isRequired,
         placedAtBlock: PropTypes.number.isRequired,
-        pricePaid: PropTypes.number.isRequired,
+        lastPricePaid: PropTypes.number.isRequired,
         timesRented: PropTypes.number.isRequired,
       }).isRequired,
       x: PropTypes.number.isRequired,
@@ -57,7 +57,7 @@ export default class Square extends Component {
       r: Math.floor(Math.random() * 255),
       g: Math.floor(Math.random() * 255),
       b: Math.floor(Math.random() * 255),
-      value: squareInfo.get('pricePaid') + 1,
+      value: squareInfo.get('lastPricePaid') + 1,
     });
   }
 
@@ -76,7 +76,7 @@ export default class Square extends Component {
       b,
       currentOwner,
       placedAtBlock,
-      pricePaid,
+      lastPricePaid,
       timesRented,
     } = squareInfo.toJS();
 
@@ -98,7 +98,7 @@ export default class Square extends Component {
               placed at block: {placedAtBlock}
             </div>
             <div>
-              price paid: {pricePaid}
+              last price paid: {lastPricePaid}
             </div>
             <div>
               times rented: {timesRented}

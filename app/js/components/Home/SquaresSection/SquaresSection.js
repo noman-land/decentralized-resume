@@ -11,7 +11,7 @@ const DEFAULT_SQUARE_INFO = Map({
   b: 255,
   currentOwner: '0x0000000000000000000000000000000000000000',
   placedAtBlock: 0,
-  pricePaid: 0,
+  lastPricePaid: 0,
   timesRented: 0,
 });
 
@@ -26,7 +26,7 @@ export default class SquaresSection extends Component {
             b: PropTypes.number.isRequired,
             currentOwner: PropTypes.string.isRequired,
             placedAtBlock: PropTypes.number.isRequired,
-            pricePaid: PropTypes.number.isRequired,
+            lastPricePaid: PropTypes.number.isRequired,
             timesRented: PropTypes.number.isRequired,
           }).isRequired,
           PropTypes.number.isRequired,

@@ -68,13 +68,13 @@ export default class SquaresUtils {
     return this.SquaresContract.deployed().then(instance =>
       instance.getSquareInfo
         .call(x, y)
-        .then(([r, g, b, currentOwner, placedAtBlock, pricePaid, timesRented]) => ({
+        .then(([r, g, b, currentOwner, placedAtBlock, lastPricePaid, timesRented]) => ({
           r: toNumber(r),
           g: toNumber(g),
           b: toNumber(b),
           currentOwner,
           placedAtBlock: toNumber(placedAtBlock),
-          pricePaid: toNumber(pricePaid),
+          lastPricePaid: toNumber(lastPricePaid),
           timesRented: toNumber(timesRented),
           x,
           y,
