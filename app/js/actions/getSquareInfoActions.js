@@ -15,6 +15,6 @@ export const getSquareInfoStart = createAction(
 
 export const getSquareInfoSuccess = createAction(
   ActionTypes.GET_SQUARE_INFO_SUCCESS,
-  squareInfo => ({ squareInfo }),
+  ({ x, y, ...squareInfo }) => ({ squareInfo }),
   ({ x, y }) => ({ x, y }),
 );

@@ -8,13 +8,15 @@ export default class SquaresSection extends Component {
     return {
       grid: ImmutablePropTypes.mapOf(
         ImmutablePropTypes.mapOf(
-          ImmutablePropTypes.mapOf(
-            PropTypes.oneOfType([
-              PropTypes.string,
-              PropTypes.number,
-            ]).isRequired,
-            PropTypes.string.isRequired,
-          ).isRequired,
+          ImmutablePropTypes.contains({
+            r: PropTypes.number.isRequired,
+            g: PropTypes.number.isRequired,
+            b: PropTypes.number.isRequired,
+            currentOwner: PropTypes.string.isRequired,
+            placedAtBlock: PropTypes.number.isRequired,
+            pricePaid: PropTypes.number.isRequired,
+            timesRented: PropTypes.number.isRequired,
+          }).isRequired,
           PropTypes.number.isRequired,
         ).isRequired,
         PropTypes.number.isRequired,

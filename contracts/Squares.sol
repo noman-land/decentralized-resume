@@ -5,7 +5,7 @@ contract Squares {
   uint256 public timeLimit = 25;
 
   uint256 public GRID_SIZE_X = 100;
-  uint256 public GRID_SIZE_Y = 100;
+  uint256 public GRID_SIZE_Y = 50;
   uint8 public DEFAULT_COLOR = 255;
 
   modifier ownerOnly() {

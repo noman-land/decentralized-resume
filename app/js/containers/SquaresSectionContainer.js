@@ -9,7 +9,7 @@ import { getSquareInfo } from '../actions/asyncActions/getSquareInfoAsyncActions
 import {
   getGrid,
   getGridSizeX as gridSizeXSelector,
-  getGridSizeX as gridSizeYSelector,
+  getGridSizeY as gridSizeYSelector,
 } from '../selectors/common';
 
 const mapStateToProps = state => ({
