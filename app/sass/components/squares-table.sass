@@ -1,4 +1,7 @@
 $square-size: 24px
+$info-box-offset: 3px
+$info-box-width: 200px
+$info-box-arrow-width: 20px
 
 table.squares-table
   border-collapse: collapse
@@ -8,5 +11,30 @@ table.squares-table
     tr
       td
         border: 1px solid grey
-        width: $square-size
+        cursor: pointer
         height: $square-size
+        position: relative
+        width: $square-size
+
+        .info-box
+          background-color: white
+          border: 1px solid lightgray
+          bottom: $square-size + $info-box-offset + ($info-box-arrow-width / 2)
+          height: $info-box-width * (9/16)
+          left: -($info-box-width / 2) + ($square-size / 2)
+          padding: 15px
+          position: absolute
+          width: $info-box-width
+
+          &:after
+            background-color: white
+            border: 1px solid lightgray
+            border-left: 0
+            border-top: 0
+            bottom: -($info-box-arrow-width / 2)
+            content: ' '
+            height: $info-box-arrow-width
+            left: ($info-box-width / 2) - 12
+            position: absolute
+            transform: rotateZ(45deg)
+            width: $info-box-arrow-width

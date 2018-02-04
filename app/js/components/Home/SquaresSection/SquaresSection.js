@@ -46,10 +46,6 @@ export default class SquaresSection extends Component {
     this.props.getGridSizeY();
   }
 
-  handlePickEmoji(pick) {
-    debugger
-  }
-
   renderColumns(y) {
     const { getSquareInfo, grid, gridSizeX } = this.props;
     return Array.from(new Array(gridSizeX)).map((_, x) => {

@@ -20,9 +20,30 @@ export default class Square extends Component {
     };
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      isHovered: false,
+    };
+    this.handleMouseOver = this.handleMouseOver.bind(this);
+    this.handleMouseOut = this.handleMouseOut.bind(this);
+  }
+
   componentDidMount() {
     const { x, y } = this.props;
     this.props.getSquareInfo(x, y);
+  }
+
+  handleMouseOver() {
+    this.setState({
+      isHovered: true,
+    });
+  }
+
+  handleMouseOut() {
+    this.setState({
+      isHovered: false,
+    });
   }
 
   render() {
@@ -32,15 +53,46 @@ export default class Square extends Component {
       y,
     } = this.props;
 
-    const { r, g, b } = squareInfo.toJS();
+    const {
+      r,
+      g,
+      b,
+      currentOwner,
+      placedAtBlock,
+      pricePaid,
+      timesRented,
+    } = squareInfo.toJS();
 
+    const id = `${x}-${y}`;
     return (
       <td
-        key={`${x}-${y}`}
+        key={id}
         style={{
           backgroundColor: `rgb(${r}, ${g}, ${b})`,
         }}
-      />
+        onMouseOver={this.handleMouseOver}
+        onMouseOut={this.handleMouseOut}
+      >
+        {this.state.isHovered && (
+          <div className="info-box">
+            <div>
+              owner: {currentOwner.slice(0, 6)}
+            </div>
+            <div>
+              placed at block: {placedAtBlock}
+            </div>
+            <div>
+              price paid: {pricePaid}
+            </div>
+            <div>
+              times rented: {timesRented}
+            </div>
+            <div>
+              {`${x}, ${y}`}
+            </div>
+          </div>
+        )}
+      </td>
     );
   }
 }
