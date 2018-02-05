@@ -1,19 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import { Map } from 'immutable';
 
 import Square from './Square';
 
-const DEFAULT_SQUARE_INFO = Map({
-  r: 255,
-  g: 255,
-  b: 255,
-  currentOwner: '0x0000000000000000000000000000000000000000',
-  placedAtBlock: 0,
-  lastPricePaid: 0,
-  timesRented: 0,
-});
+import { DEFAULT_SQUARE_INFO } from '../../../constants';
 
 export default class SquaresSection extends Component {
   static get propTypes() {
@@ -35,8 +26,6 @@ export default class SquaresSection extends Component {
       ).isRequired,
       gridSizeX: PropTypes.number.isRequired,
       gridSizeY: PropTypes.number.isRequired,
-      getGridSizeX: PropTypes.func.isRequired,
-      getGridSizeY: PropTypes.func.isRequired,
       getSquareInfo: PropTypes.func.isRequired,
       rentSquare: PropTypes.func.isRequired,
     };
@@ -50,9 +39,21 @@ export default class SquaresSection extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentDidMount() {
-    this.props.getGridSizeX();
-    this.props.getGridSizeY();
+  shouldComponentUpdate(newProps, newState) {
+    const { grid, gridSizeX, gridSizeY } = this.props;
+    const { openedPanel: { x, y } } = this.state;
+    const {
+      grid: newGrid,
+      gridSizeX: newGridSizeX,
+      gridSizeY: newGridSizeY,
+    } = newProps;
+    const { openedPanel: { x: newX, y: newY } } = newState;
+
+    return !grid.equals(newGrid)
+      || gridSizeX !== (newGridSizeX)
+      || gridSizeY !== (newGridSizeY)
+      || x !== newX
+      || y !== newY;
   }
 
   handleClick(x, y) {

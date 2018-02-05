@@ -4,7 +4,7 @@ import ActionTypes from './ActionTypes';
 
 export const getGridSizeXError = createAction(
   ActionTypes.GET_GRID_SIZE_X_ERROR,
-  error => ({ error }),
+  error => error,
 );
 
 export const getGridSizeXStart = createAction(ActionTypes.GET_GRID_SIZE_X_START);

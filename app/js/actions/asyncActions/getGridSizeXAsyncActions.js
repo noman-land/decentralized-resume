@@ -7,6 +7,7 @@ import {
 } from '../getGridSizeXActions';
 
 const squareUtils = new SquareUtils();
+squareUtils.initWeb3();
 
 export const getGridSizeX = () => dispatch => {
   dispatch(getGridSizeXStart());

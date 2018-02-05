@@ -8,6 +8,9 @@ export default function grid(state = Map(), action) {
       const { meta: { x, y }, payload: { squareInfo } } = action;
       return state.setIn([x, y], Map(squareInfo));
     }
+    case ActionTypes.SET_GRID: {
+      return action.payload.grid;
+    }
     default:
       return state;
   }

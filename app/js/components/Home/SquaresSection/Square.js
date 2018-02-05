@@ -39,8 +39,14 @@ export default class Square extends Component {
   }
 
   componentDidMount() {
-    const { x, y } = this.props;
-    this.props.getSquareInfo(x, y);
+    const { getSquareInfo, x, y } = this.props;
+    getSquareInfo(x, y);
+  }
+
+  shouldComponentUpdate(newProps) {
+    const { isPanelOpen: shouldPanelBeOpen, squareInfo: newSquareInfo } = newProps;
+    const { isPanelOpen, squareInfo: oldSquareInfo } = this.props;
+    return !newSquareInfo.equals(oldSquareInfo) || !(shouldPanelBeOpen === isPanelOpen);
   }
 
   handleRentClick() {

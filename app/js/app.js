@@ -8,7 +8,7 @@ import '../sass/style.sass';
 const interval = setInterval(() => {
   const appContainer = document.getElementById('react-application');
 
-  //if (appContainer === null || !window.web3) return false;
+  if (appContainer === null || !window.web3) return false;
 
   clearInterval(interval);
   ReactDOM.render(<Application />, appContainer);

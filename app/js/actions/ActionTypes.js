@@ -16,4 +16,6 @@ export default keyMirror({
   RENT_SQUARE_ERROR: null,
   RENT_SQUARE_START: null,
   RENT_SQUARE_SUCCESS: null,
+
+  SET_GRID: null,
 });

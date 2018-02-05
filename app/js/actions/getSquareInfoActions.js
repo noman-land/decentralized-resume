@@ -4,7 +4,8 @@ import ActionTypes from './ActionTypes';
 
 export const getSquareInfoError = createAction(
   ActionTypes.GET_SQUARE_INFO_ERROR,
-  error => error,
+  ({ error }) => error,
+  ({ x, y }) => ({ x, y }),
 );
 
 export const getSquareInfoStart = createAction(

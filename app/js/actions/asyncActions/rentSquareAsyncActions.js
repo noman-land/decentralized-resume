@@ -9,6 +9,7 @@ import {
 import { getSquareInfo } from '../asyncActions/getSquareInfoAsyncActions';
 
 const squareUtils = new SquareUtils();
+squareUtils.initWeb3();
 
 export const rentSquare = ({
   x,

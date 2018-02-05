@@ -12,7 +12,6 @@ const toNumber = bigNumber => bigNumber.toNumber();
 export default class SquaresUtils {
   constructor() {
     this.SquaresContract = contract(squaresArtifacts);
-    this.initWeb3().then(this.SquaresContract.setProvider);
   }
 
   getActiveAccount() {
@@ -98,6 +97,9 @@ export default class SquaresUtils {
       }
 
       return reject(new Error('No web3 found. Please install MetaMask browser extension or use a web3 enabled browser.'));
+    }).then(currentProvider => {
+      this.SquaresContract.setProvider(currentProvider);
+      return currentProvider;
     });
   }
 
