@@ -1,8 +1,9 @@
-import { Map } from 'immutable';
+import { fromJS } from 'immutable';
 
 export const DEFAULT_GAS = 2000000;
 
-export const DEFAULT_SQUARE_INFO = Map({
+export const DEFAULT_SQUARE_INFO = fromJS({
+  emoji: [0, 0, 0, 0, 0, 0, 0, 0],
   r: 255,
   g: 255,
   b: 255,

@@ -67,7 +67,8 @@ export default class SquaresUtils {
     return this.SquaresContract.deployed().then(instance =>
       instance.getSquareInfo
         .call(x, y)
-        .then(([r, g, b, currentOwner, placedAtBlock, lastPricePaid, timesRented]) => ({
+        .then(([emoji, r, g, b, currentOwner, placedAtBlock, lastPricePaid, timesRented]) => ({
+          emoji: emoji.map(toNumber),
           r: toNumber(r),
           g: toNumber(g),
           b: toNumber(b),
@@ -103,11 +104,11 @@ export default class SquaresUtils {
     });
   }
 
-  rentSquare({ x, y, r, g, b, value }) {
+  rentSquare({ x, y, emoji, r, g, b, value }) {
     return this.SquaresContract.deployed().then(instance =>
       this.getActiveAccount().then(activeAccount =>
         instance
-          .rentSquare(x, y, r, g, b, {
+          .rentSquare(x, y, emoji, r, g, b, {
             value,
             from: activeAccount,
             gas: DEFAULT_GAS,

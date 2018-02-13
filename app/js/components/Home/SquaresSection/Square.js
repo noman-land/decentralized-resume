@@ -4,6 +4,8 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import SquareInfoPanel from './SquareInfoPanel';
 
+import { codePointsToEmoji } from '../../../utils/emojiUtils';
+
 export default class Square extends Component {
   static get propTypes() {
     return {
@@ -12,6 +14,7 @@ export default class Square extends Component {
       onRentClick: PropTypes.func.isRequired,
       onSquareClick: PropTypes.func.isRequired,
       squareInfo: ImmutablePropTypes.contains({
+        emoji: ImmutablePropTypes.listOf(PropTypes.number.isRequired).isRequired,
         r: PropTypes.number.isRequired,
         g: PropTypes.number.isRequired,
         b: PropTypes.number.isRequired,
@@ -53,6 +56,7 @@ export default class Square extends Component {
     } = this.props;
 
     const {
+      emoji,
       r,
       g,
       b,
@@ -67,6 +71,9 @@ export default class Square extends Component {
           backgroundColor: `rgb(${r}, ${g}, ${b})`,
         }}
       >
+        <span className="flex justify-center align-items-center" style={{ width: '100%', height: '100%' }}>
+          {codePointsToEmoji(emoji)}
+        </span >
         {isPanelOpen && (
           <SquareInfoPanel
             closePanel={onSquareClick}

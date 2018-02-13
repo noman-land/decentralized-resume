@@ -14,6 +14,7 @@ squareUtils.initWeb3();
 export const rentSquare = ({
   x,
   y,
+  emoji,
   r,
   g,
   b,
@@ -22,6 +23,7 @@ export const rentSquare = ({
   dispatch(rentSquareStart({
     x,
     y,
+    emoji,
     r,
     g,
     b,
@@ -31,6 +33,7 @@ export const rentSquare = ({
     .rentSquare({
       x,
       y,
+      emoji,
       r,
       b,
       g,
@@ -38,8 +41,16 @@ export const rentSquare = ({
     })
     .then(
       transaction => {
-        dispatch(rentSquareSuccess({ transaction, x, y }));
-        dispatch(getSquareInfo(x, y));
+        dispatch(rentSquareSuccess({
+          x,
+          y,
+          emoji,
+          r,
+          g,
+          b,
+          value,
+          transaction,
+        }));
       },
       error => dispatch(rentSquareError({ error, x, y })),
     );

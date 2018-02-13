@@ -12,6 +12,7 @@ export default class SquaresSection extends Component {
       grid: ImmutablePropTypes.mapOf(
         ImmutablePropTypes.mapOf(
           ImmutablePropTypes.contains({
+            emoji: ImmutablePropTypes.listOf(PropTypes.number.isRequired).isRequired,
             r: PropTypes.number.isRequired,
             g: PropTypes.number.isRequired,
             b: PropTypes.number.isRequired,

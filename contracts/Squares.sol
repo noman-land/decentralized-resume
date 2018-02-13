@@ -4,8 +4,8 @@ contract Squares {
   address public owner;
   uint256 public timeLimit = 2;
 
-  uint256 public GRID_SIZE_X = 20;
-  uint256 public GRID_SIZE_Y = 20;
+  uint256 public GRID_SIZE_X = 10;
+  uint256 public GRID_SIZE_Y = 10;
   uint8 public DEFAULT_COLOR = 255;
 
   modifier ownerOnly() {
@@ -17,7 +17,21 @@ contract Squares {
     owner = msg.sender;
   }
 
+  event NewSquareRental(
+    uint256 x,
+    uint256 y,
+    uint32[8] emoji,
+    uint8 r,
+    uint8 g,
+    uint8 b,
+    address newOwner,
+    uint256 blockNumber,
+    uint256 pricePaid,
+    uint256 rentalNumber
+  );
+
   struct Square {
+    uint32[8] emoji;
     uint8 r;
     uint8 g;
     uint8 b;
@@ -37,6 +51,7 @@ contract Squares {
     constant
     public
     returns (
+      uint32[8] emoji,
       uint8 r,
       uint8 g,
       uint8 b,
@@ -48,6 +63,7 @@ contract Squares {
     Square memory square = grid[x][y];
     bool isOwned = square.currentOwner != 0x0;
     return (
+      square.emoji,
       isOwned ? square.r : DEFAULT_COLOR,
       isOwned ? square.g : DEFAULT_COLOR,
       isOwned ? square.b : DEFAULT_COLOR,
@@ -69,6 +85,7 @@ contract Squares {
   function rentSquare(
     uint256 x,
     uint256 y,
+    uint32[8] emoji,
     uint8 r,
     uint8 g,
     uint8 b
@@ -76,14 +93,31 @@ contract Squares {
     require(x < GRID_SIZE_X && y < GRID_SIZE_Y);
     require(msg.value > grid[x][y].lastPricePaid);
     require(block.number - grid[x][y].placedAtBlock > timeLimit);
+
+    uint256 timesRented = grid[x][y].timesRented + 1;
+
     grid[x][y] = Square(
+      emoji,
       r,
       g,
       b,
       msg.sender,
       block.number,
       msg.value,
-      grid[x][y].timesRented + 1
+      timesRented
+    );
+
+    NewSquareRental(
+      x,
+      y,
+      emoji,
+      r,
+      g,
+      b,
+      msg.sender,
+      block.number,
+      msg.value,
+      timesRented
     );
   }
 
