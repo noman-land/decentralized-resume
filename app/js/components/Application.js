@@ -38,15 +38,17 @@ export default class Application extends Component {
     this.createStore();
 
     this.SquareUtils = new SquareUtils();
-    this.SquareUtils.initWeb3().then(() =>
+    this.SquareUtils.initWeb3().then(() => {
+      const { dispatch } = this.store;
       Promise.all([
         this.SquareUtils.getGridSizeX(),
         this.SquareUtils.getGridSizeY(),
       ]).then(([gridSizeX, gridSizeY]) => {
-        this.store.dispatch(getGridSizeXSuccess({ gridSizeX }));
-        this.store.dispatch(getGridSizeYSuccess({ gridSizeY }));
-        this.store.dispatch(setGrid(createInitialGrid(gridSizeX, gridSizeY)));
-      }));
+        dispatch(getGridSizeXSuccess({ gridSizeX }));
+        dispatch(getGridSizeYSuccess({ gridSizeY }));
+        dispatch(setGrid(createInitialGrid(gridSizeX, gridSizeY)));
+      });
+    });
   }
 
   createStore() {
