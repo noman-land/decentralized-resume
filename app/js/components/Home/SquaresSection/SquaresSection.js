@@ -69,7 +69,12 @@ export default class SquaresSection extends Component {
   }
 
   renderColumns(y) {
-    const { getSquareInfo, grid, gridSizeX, rentSquare } = this.props;
+    const {
+      getSquareInfo,
+      grid,
+      gridSizeX,
+      rentSquare,
+    } = this.props;
     const { openedPanel } = this.state;
     return Array.from(new Array(gridSizeX)).map((_, x) => {
       const squareInfo = grid.getIn([x, y], DEFAULT_SQUARE_INFO);
@@ -78,8 +83,8 @@ export default class SquaresSection extends Component {
           key={`${x}-${y}`}
           isPanelOpen={openedPanel.x === x && openedPanel.y === y}
           getSquareInfo={getSquareInfo}
-          onClick={this.handleClick(x, y)}
-          onRentSquare={rentSquare}
+          onSquareClick={this.handleClick(x, y)}
+          onRentClick={rentSquare}
           squareInfo={squareInfo}
           x={x}
           y={y}

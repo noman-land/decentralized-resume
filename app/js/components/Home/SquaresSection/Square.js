@@ -2,17 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
-function stopPropagation(event) {
-  event.stopPropagation();
-}
+import SquareInfoPanel from './SquareInfoPanel';
 
 export default class Square extends Component {
   static get propTypes() {
     return {
       isPanelOpen: PropTypes.bool,
       getSquareInfo: PropTypes.func.isRequired,
-      onClick: PropTypes.func.isRequired,
-      onRentSquare: PropTypes.func.isRequired,
+      onRentClick: PropTypes.func.isRequired,
+      onSquareClick: PropTypes.func.isRequired,
       squareInfo: ImmutablePropTypes.contains({
         r: PropTypes.number.isRequired,
         g: PropTypes.number.isRequired,
@@ -33,11 +31,6 @@ export default class Square extends Component {
     };
   }
 
-  constructor() {
-    super();
-    this.handleRentClick = this.handleRentClick.bind(this);
-  }
-
   componentDidMount() {
     const { getSquareInfo, x, y } = this.props;
     getSquareInfo(x, y);
@@ -49,28 +42,11 @@ export default class Square extends Component {
     return !newSquareInfo.equals(oldSquareInfo) || !(shouldPanelBeOpen === isPanelOpen);
   }
 
-  handleRentClick() {
-    const {
-      x,
-      y,
-      onRentSquare,
-      squareInfo,
-    } = this.props;
-
-    onRentSquare({
-      x,
-      y,
-      r: Math.floor(Math.random() * 255),
-      g: Math.floor(Math.random() * 255),
-      b: Math.floor(Math.random() * 255),
-      value: squareInfo.get('lastPricePaid') + 1,
-    });
-  }
-
   render() {
     const {
       isPanelOpen,
-      onClick,
+      onRentClick,
+      onSquareClick,
       squareInfo,
       x,
       y,
@@ -80,42 +56,25 @@ export default class Square extends Component {
       r,
       g,
       b,
-      currentOwner,
-      placedAtBlock,
-      lastPricePaid,
-      timesRented,
     } = squareInfo.toJS();
 
     const id = `${x}-${y}`;
     return (
       <td
         key={id}
-        onClick={onClick}
+        onClick={onSquareClick}
         style={{
           backgroundColor: `rgb(${r}, ${g}, ${b})`,
         }}
       >
         {isPanelOpen && (
-          <div className="info-box" onClick={stopPropagation}>
-            <div>
-              owner: {currentOwner.slice(0, 6)}
-            </div>
-            <div>
-              placed at block: {placedAtBlock}
-            </div>
-            <div>
-              last price paid: {lastPricePaid}
-            </div>
-            <div>
-              times rented: {timesRented}
-            </div>
-            <div>
-              {`${x}, ${y}`}
-            </div>
-            <button onClick={this.handleRentClick}>
-              Rent Square
-            </button>
-          </div>
+          <SquareInfoPanel
+            closePanel={onSquareClick}
+            onRentClick={onRentClick}
+            squareInfo={squareInfo}
+            x={x}
+            y={y}
+          />
         )}
       </td>
     );
