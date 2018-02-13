@@ -59,10 +59,9 @@ export default class SquaresSection extends Component {
   }
 
   closePanel() {
-    return () =>
-      this.setState({
-        openedPanel: { x: null, y: null },
-      });
+    this.setState({
+      openedPanel: { x: null, y: null },
+    });
   }
 
   isPanelOpen(x, y) {
@@ -90,7 +89,7 @@ export default class SquaresSection extends Component {
       const isPanelOpen = this.isPanelOpen(x, y);
       return (
         <Square
-          closePanel={this.closePanel(x, y)}
+          closePanel={this.closePanel}
           key={`${x}-${y}`}
           isPanelOpen={isPanelOpen}
           getSquareInfo={getSquareInfo}
