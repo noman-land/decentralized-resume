@@ -9,10 +9,11 @@ import { codePointsToEmoji } from '../../../utils/emojiUtils';
 export default class Square extends Component {
   static get propTypes() {
     return {
+      closePanel: PropTypes.func.isRequired,
       isPanelOpen: PropTypes.bool,
       getSquareInfo: PropTypes.func.isRequired,
       onRentClick: PropTypes.func.isRequired,
-      onSquareClick: PropTypes.func.isRequired,
+      openPanel: PropTypes.func.isRequired,
       squareInfo: ImmutablePropTypes.contains({
         emoji: ImmutablePropTypes.listOf(PropTypes.number.isRequired).isRequired,
         r: PropTypes.number.isRequired,
@@ -47,9 +48,10 @@ export default class Square extends Component {
 
   render() {
     const {
+      closePanel,
       isPanelOpen,
       onRentClick,
-      onSquareClick,
+      openPanel,
       squareInfo,
       x,
       y,
@@ -66,7 +68,7 @@ export default class Square extends Component {
     return (
       <td
         key={id}
-        onClick={onSquareClick}
+        onClick={isPanelOpen ? closePanel : openPanel}
         style={{
           backgroundColor: `rgb(${r}, ${g}, ${b})`,
         }}
@@ -76,7 +78,7 @@ export default class Square extends Component {
         </span >
         {isPanelOpen && (
           <SquareInfoPanel
-            closePanel={onSquareClick}
+            closePanel={closePanel}
             onRentClick={onRentClick}
             squareInfo={squareInfo}
             x={x}

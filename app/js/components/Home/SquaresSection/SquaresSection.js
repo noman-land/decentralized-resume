@@ -37,7 +37,8 @@ export default class SquaresSection extends Component {
     this.state = {
       openedPanel: { x: null, y: null },
     };
-    this.handleClick = this.handleClick.bind(this);
+    this.closePanel = this.closePanel.bind(this);
+    this.openPanel = this.openPanel.bind(this);
   }
 
   shouldComponentUpdate(newProps, newState) {
@@ -57,16 +58,24 @@ export default class SquaresSection extends Component {
       || y !== newY;
   }
 
-  handleClick(x, y) {
-    return () => this.setState(state => {
-      const { x: openX, y: openY } = state.openedPanel;
-      return {
-        ...state,
-        openedPanel: x === openX && y === openY
-          ? { x: null, y: null }
-          : { x, y },
-      };
-    });
+  closePanel() {
+    return () =>
+      this.setState({
+        openedPanel: { x: null, y: null },
+      });
+  }
+
+  isPanelOpen(x, y) {
+    const { x: openX, y: openY } = this.state.openedPanel;
+    return openX === x
+      && openY === y;
+  }
+
+  openPanel(x, y) {
+    return () =>
+      this.setState({
+        openedPanel: { x, y },
+      });
   }
 
   renderColumns(y) {
@@ -76,16 +85,17 @@ export default class SquaresSection extends Component {
       gridSizeX,
       rentSquare,
     } = this.props;
-    const { openedPanel } = this.state;
     return Array.from(new Array(gridSizeX)).map((_, x) => {
       const squareInfo = grid.getIn([x, y], DEFAULT_SQUARE_INFO);
+      const isPanelOpen = this.isPanelOpen(x, y);
       return (
         <Square
+          closePanel={this.closePanel(x, y)}
           key={`${x}-${y}`}
-          isPanelOpen={openedPanel.x === x && openedPanel.y === y}
+          isPanelOpen={isPanelOpen}
           getSquareInfo={getSquareInfo}
-          onSquareClick={this.handleClick(x, y)}
           onRentClick={rentSquare}
+          openPanel={this.openPanel(x, y)}
           squareInfo={squareInfo}
           x={x}
           y={y}
