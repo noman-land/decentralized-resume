@@ -1,3 +1,5 @@
+@import ../utils/flexbox
+
 $square-size: 32px
 $info-box-offset: -1px
 $info-box-width: 200px
@@ -17,6 +19,13 @@ table.squares-table
         height: $square-size
         position: relative
         width: $square-size
+
+        .emoji-wrapper
+          @extend .align-items-center
+          @extend .flex
+          @extend .justify-center
+          height: 100%
+          width: 100%
 
         .info-box
           background-color: white

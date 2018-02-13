@@ -71,7 +71,7 @@ export default class Square extends Component {
           backgroundColor: `rgb(${r}, ${g}, ${b})`,
         }}
       >
-        <span className="flex justify-center align-items-center" style={{ width: '100%', height: '100%' }}>
+        <span className="emoji-wrapper">
           {codePointsToEmoji(emoji)}
         </span >
         {isPanelOpen && (
