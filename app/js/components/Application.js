@@ -22,7 +22,7 @@ function createInitialGrid(gridSizeX, gridSizeY) {
   let grid = Map();
 
   Array.from(new Array(gridSizeX)).forEach((_, x) => {
-    Array.from(new Array(gridSizeY)).forEach((_, y) => {
+    Array.from(new Array(gridSizeY)).forEach((__, y) => {
       grid = grid.setIn([x, y], DEFAULT_SQUARE_INFO);
     });
   });
