@@ -9,6 +9,7 @@ import { DEFAULT_SQUARE_INFO } from '../../../constants';
 export default class SquaresSection extends Component {
   static get propTypes() {
     return {
+      getSquareInfo: PropTypes.func.isRequired,
       grid: ImmutablePropTypes.mapOf(
         ImmutablePropTypes.mapOf(
           ImmutablePropTypes.contains({
@@ -27,13 +28,12 @@ export default class SquaresSection extends Component {
       ).isRequired,
       gridSizeX: PropTypes.number.isRequired,
       gridSizeY: PropTypes.number.isRequired,
-      getSquareInfo: PropTypes.func.isRequired,
       rentSquare: PropTypes.func.isRequired,
     };
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       openedPanel: { x: null, y: null },
     };
@@ -52,29 +52,30 @@ export default class SquaresSection extends Component {
     const { openedPanel: { x: newX, y: newY } } = newState;
 
     return !grid.equals(newGrid)
-      || gridSizeX !== (newGridSizeX)
-      || gridSizeY !== (newGridSizeY)
+      || gridSizeX !== newGridSizeX
+      || gridSizeY !== newGridSizeY
       || x !== newX
       || y !== newY;
   }
 
-  closePanel() {
-    this.setState({
-      openedPanel: { x: null, y: null },
-    });
+  closePanel(closeX, closeY) {
+    const { x: openX, y: openY } = this.state.openedPanel;
+    if (closeX === openX && closeY === openY) {
+      this.setState({
+        openedPanel: { x: null, y: null },
+      });
+    }
   }
 
   isPanelOpen(x, y) {
     const { x: openX, y: openY } = this.state.openedPanel;
-    return openX === x
-      && openY === y;
+    return openX === x && openY === y;
   }
 
   openPanel(x, y) {
-    return () =>
-      this.setState({
-        openedPanel: { x, y },
-      });
+    this.setState({
+      openedPanel: { x, y },
+    });
   }
 
   renderColumns(y) {
@@ -84,30 +85,30 @@ export default class SquaresSection extends Component {
       gridSizeX,
       rentSquare,
     } = this.props;
-    return Array.from(new Array(gridSizeX)).map((_, x) => {
-      const squareInfo = grid.getIn([x, y], DEFAULT_SQUARE_INFO);
-      const isPanelOpen = this.isPanelOpen(x, y);
-      return (
+    return Array
+      .from(new Array(gridSizeX))
+      .map((_, x) => (
         <Square
           closePanel={this.closePanel}
-          key={`${x}-${y}`}
-          isPanelOpen={isPanelOpen}
+          isPanelOpen={this.isPanelOpen(x, y)}
           getSquareInfo={getSquareInfo}
+          key={`${x}-${y}`}
           onRentClick={rentSquare}
-          openPanel={this.openPanel(x, y)}
-          squareInfo={squareInfo}
+          openPanel={this.openPanel}
+          squareInfo={grid.getIn([x, y], DEFAULT_SQUARE_INFO)}
           x={x}
           y={y}
         />
-      );
-    });
+      ));
   }
 
   renderRows() {
     const { gridSizeY } = this.props;
-    return Array.from(new Array(gridSizeY)).map((_, y) => (
-      <tr key={y}>{this.renderColumns(y)}</tr>
-    ));
+    return Array
+      .from(new Array(gridSizeY))
+      .map((_, y) => (
+        <tr key={y}>{this.renderColumns(y)}</tr>
+      ));
   }
 
   render() {

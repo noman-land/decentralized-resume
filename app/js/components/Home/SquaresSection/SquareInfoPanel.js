@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
-function stopPropagation(event) {
-  event.stopPropagation();
-}
+import { emojiToCodePoints } from '../../../utils/emojiUtils';
 
 export default class SquareInfoPanel extends Component {
   static get propTypes() {
@@ -28,13 +26,34 @@ export default class SquareInfoPanel extends Component {
 
   constructor(props) {
     super(props);
+    this.closeIfClickedOutside = this.closeIfClickedOutside.bind(this);
     this.handleRentClick = this.handleRentClick.bind(this);
+    this.setWrapperRef = this.setWrapperRef.bind(this);
+  }
+
+  componentDidMount() {
+    document.addEventListener('click', this.closeIfClickedOutside);
   }
 
   shouldComponentUpdate(newProps) {
     const { squareInfo: newSquareInfo } = newProps;
     const { squareInfo: oldSquareInfo } = this.props;
     return !newSquareInfo.equals(oldSquareInfo);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.closeIfClickedOutside);
+  }
+
+  setWrapperRef(node) {
+    this.wrapperRef = node;
+  }
+
+  closeIfClickedOutside(event) {
+    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+      const { closePanel, x, y } = this.props;
+      closePanel(x, y);
+    }
   }
 
   handleRentClick() {
@@ -49,12 +68,12 @@ export default class SquareInfoPanel extends Component {
     onRentClick({
       x,
       y,
-      emoji: [128105, 8205, 128105, 8205, 128103, 8205, 128103, 0],
+      emoji: emojiToCodePoints('💯'),
       r: Math.floor(Math.random() * 255),
       g: Math.floor(Math.random() * 255),
       b: Math.floor(Math.random() * 255),
       value: squareInfo.get('lastPricePaid') + 1,
-    }).then(closePanel);
+    }).then(() => closePanel(x, y));
   }
 
   render() {
@@ -72,7 +91,7 @@ export default class SquareInfoPanel extends Component {
     } = squareInfo.toJS();
 
     return (
-      <div className="info-box" onClick={stopPropagation}>
+      <div className="info-box" ref={this.setWrapperRef}>
         <div>
           owner: {currentOwner.slice(0, 6)}
         </div>
@@ -80,7 +99,7 @@ export default class SquareInfoPanel extends Component {
           placed at block: {placedAtBlock}
         </div>
         <div>
-          last price paid: {lastPricePaid}
+          minimum donation: {lastPricePaid + 1} wei
         </div>
         <div>
           times rented: {timesRented}

@@ -35,6 +35,11 @@ export default class Square extends Component {
     };
   }
 
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
   componentDidMount() {
     const { getSquareInfo, x, y } = this.props;
     getSquareInfo(x, y);
@@ -46,12 +51,16 @@ export default class Square extends Component {
     return !newSquareInfo.equals(oldSquareInfo) || !(shouldPanelBeOpen === isPanelOpen);
   }
 
+  handleClick() {
+    const { closePanel, isPanelOpen, openPanel, x, y } = this.props;
+    return isPanelOpen ? closePanel(x, y) : openPanel(x, y);
+  }
+
   render() {
     const {
       closePanel,
       isPanelOpen,
       onRentClick,
-      openPanel,
       squareInfo,
       x,
       y,
@@ -68,12 +77,14 @@ export default class Square extends Component {
     return (
       <td
         key={id}
-        onClick={isPanelOpen ? closePanel : openPanel}
         style={{
           backgroundColor: `rgb(${r}, ${g}, ${b})`,
         }}
       >
-        <span className="emoji-wrapper">
+        <span
+          className="emoji-wrapper"
+          onClick={this.handleClick}
+        >
           {codePointsToEmoji(emoji)}
         </span >
         {isPanelOpen && (
